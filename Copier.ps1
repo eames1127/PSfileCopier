@@ -3,10 +3,12 @@ param (
     [string] $copyTo
 )
 
+$extFilter = "*.ps1", "*.md", "*.docx"
+
 Write-Host "Copy from location" $copyFrom
 Write-Host "Copy to location" $copyTo
 
-foreach ($file in Get-ChildItem -Path $copyFrom "\*" -Recurse)
+foreach ($file in Get-ChildItem -Path $copyFrom "\*" -Recurse -Include $extFilter)
 {
     Write-Host "Copying" $file "to" $copyTo
     Copy-Item $file -Destination $copyTo -Confirm
