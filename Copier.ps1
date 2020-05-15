@@ -6,6 +6,11 @@ param (
 $extFilter = "*.ps1", "*.md", "*.docx"
 $continue = "y"
 
+if($copyFrom -eq "")
+{
+    $copyFrom = Get-Location
+}
+
 Write-Host "Copy from location" $copyFrom
 Write-Host "Copy to location" $copyTo
 
