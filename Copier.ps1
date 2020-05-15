@@ -2,7 +2,7 @@ param (
     [string] $copyFrom,
     [string] $copyTo
 )
-
+# To look for a specific extension specify a value such as "*.docx" or for multiple types "*.doc","*.docx" 
 $extFilter = "*.ps1", "*.md", "*.docx"
 $continue = "y"
 
