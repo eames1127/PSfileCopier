@@ -3,16 +3,34 @@ param (
     [string] $copyTo
 )
 
+$extFilter = "*.ps1", "*.md", "*.docx"
+$continue = "y"
+
+if($copyFrom -eq "")
+{
+    $copyFrom = Get-Location
+}
+
 Write-Host "Copy from location" $copyFrom
 Write-Host "Copy to location" $copyTo
 
-foreach ($file in Get-ChildItem -Path $copyFrom "\*" -Recurse)
+if($extFilter -eq "")
 {
-    Write-Host "Copying" $file "to" $copyTo
-    Copy-Item $file -Destination $copyTo -Confirm
+    Write-Host "No file extension(s) have been specified, are you sure you want to continue? y/n"
+    $continue = Read-Host
 }
-
-Write-Host "Finished copying files to" $copyTo
+if(-not($continue.ToLower() -eq 'y'))
+{
+    Write-Host "Aborted"
+}
+else {    
+    foreach ($file in Get-ChildItem -Path $copyFrom "\*" -Recurse -Include $extFilter)
+    {
+        Write-Host "Copying" $file "to" $copyTo
+        Copy-Item $file -Destination $copyTo -Confirm
+    }
+    Write-Host "Finished copying files to" $copyTo
+}
 Write-Host "Script complete."
 
 pause
